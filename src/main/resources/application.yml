@@ -1,0 +1,29 @@
+spring:
+  name: spring-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: certification-service
+          uri: http://certification-service:8081
+          predicates:
+            - Path=/certifications/**  
+          filters:
+            - RewritePath=/certifications/(?<path>.*), /$\{path} 
+          logging:
+            level: DEBUG
+
+server:
+  port: 8080
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway, health, info
+
+# logging:
+#   level:
+#     root: DEBUG

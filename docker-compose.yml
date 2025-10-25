@@ -1,0 +1,46 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_DB: certifications
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+  spring-gateway:
+    image: arm64v8/openjdk:21
+    container_name: spring-gateway
+    volumes:
+      - ./build/libs/spring-gateway-1.0.0.jar:/app/spring-gateway.jar
+    environment:
+      - JAVA_OPTS=-Xmx512m -Djava.awt.headless=true
+    ports:
+      - "5005:5005"
+      - "8080:8080"
+    command: sh -c "java $JAVA_OPTS -jar /app/spring-gateway.jar" 
+    depends_on:
+      - certification-service 
+
+  certification-service:
+    image: arm64v8/openjdk:21
+    container_name: certification-service
+    volumes:
+      - ../certifications/build/libs/certifications-0.1.0.jar:/app/certification-service.jar
+    environment:
+      - JAVA_OPTS=-Xmx512m -Djava.awt.headless=true
+    ports:
+      - "5006:5005"
+      - "8081:8081"
+    command: sh -c "java $JAVA_OPTS -jar /app/certification-service.jar" 
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
+    

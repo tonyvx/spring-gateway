@@ -1,0 +1,12 @@
+spring:
+  name: spring-gateway
+  cloud:
+    gateway:
+      default-filter-strategy: none
+      routes:
+        - id: certification-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/certifications/**  
+          filters:
+            - RewritePath=/certifications/(?<path>.*), /\${path} 
