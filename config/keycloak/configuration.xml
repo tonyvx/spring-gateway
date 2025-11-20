@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <http-client>
+        <properties>
+            <property name="connectTimeout" value="5000"/>
+            <property name="readTimeout" value="5000"/>
+            <property name="trust-store-type" value="jks"/>
+            <property name="trust-store-file" value="/etc/keycloak/truststore.jks"/>
+            <property name="key-store-type" value="jks"/>
+            <property name="key-store-file" value="/etc/keycloak/keystore.jks"/>
+        </properties>
+    </http-client>
+</configuration>

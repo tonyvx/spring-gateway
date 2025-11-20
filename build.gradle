@@ -24,10 +24,27 @@ gitProperties {
 }
 
 dependencies {
-    implementation "org.springframework.cloud:spring-cloud-starter-gateway"
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.springframework.boot:spring-boot-starter-webflux"
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+     // --- Core Gateway + Reactive Stack ---
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    // --- Security (OAuth2 + JWT Resource Server) ---
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // --- Optional: For JWT decoding ---
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+
+    // --- Actuator for health & metrics ---
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // --- Logging ---
+    // implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    // --- Testing ---
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {

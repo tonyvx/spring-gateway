@@ -2,6 +2,8 @@ spring:
   name: spring-gateway
   cloud:
     gateway:
+      default-filters:
+        - TokenRelay=
       routes:
         - id: certification-service
           uri: http://certification-service:8081
@@ -9,8 +11,28 @@ spring:
             - Path=/certifications/**  
           filters:
             - RewritePath=/certifications/(?<path>.*), /$\{path} 
-          logging:
-            level: DEBUG
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://keycloak.localhost:8082/realms/app/protocol/openid-connect/certs
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: app
+            client-secret: 0MouMwJ5W7CmhilRxmFC287SiZzGBUiB
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            authorization-uri: http://keycloak.localhost:8082/realms/app/protocol/openid-connect/auth
+            token-uri: http://keycloak.localhost:8082/realms/app/protocol/openid-connect/token
+            user-info-uri: http://keycloak.localhost:8082/realms/app/protocol/openid-connect/userinfo
+            jwk-set-uri: http://keycloak.localhost:8082/realms/app/protocol/openid-connect/certs
+            issuer-uri: http://keycloak.localhost:8082/realms/app
 
 server:
   port: 8080
@@ -27,3 +49,4 @@ management:
 # logging:
 #   level:
 #     root: DEBUG
+

@@ -89,3 +89,8 @@ The application exposes actuator endpoints, including `/actuator/info` and `/act
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+
+https://piotrminkowski.com/2024/03/01microservices-with-spring-cloud-gateway-oauth2-and-keycloak/
+
+Homepage design
+https://uxpilot.ai/s/515357efe0dea035911efb314f73aa96
